@@ -1,0 +1,23 @@
+name: Security Audit
+on: [push]
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Dependency Check
+      uses: dependency-check/action@v3
+      with:
+        project: 'DeepNux'
+        format: 'HTML'
+        
+  nuclei-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Nuclei Scan
+      uses: projectdiscovery/nuclei-action@main
+      with:
+        target: "https://github.com/DeepNux"
+        templates: "misconfiguration, vulnerabilities"
